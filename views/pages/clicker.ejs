@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entropy Clicker</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/resources/images/glitch-cursor.png" />
+
+    <!-- Dependencies -->
+    <%- include ("../partials/dependencies.ejs") %>
+
+    <!-- Stylesheet reference -->
+    <link rel="stylesheet" href="/css/clicker.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/popup.css">
+</head>
+
+<header>
+    <!-- Navbar Import -->
+    <%- include ("../partials/navbar.ejs") %>
+    <script src="/js/navbar.js"></script>
+</header>
+
+<body>
+
+    <div class="wrapper">
+
+        <!-- Login Popup Import -->
+        <%- include ("../partials/popup.ejs") %>
+        <script src="/js/popup.js" onload="highlightLogin()"></script>
+    
+        <!-- Has to be placed AFTER the popup script -->
+        <script src="js/login.js"></script>
+    
+        <div class="info-login">
+            <img src="/resources/gifs/arrow.gif" alt="Arrow pointing Up">
+        </div>
+    
+        <section id="section-initial">
+            <h1>PLEASE LOG-IN</h1>
+            <hr>
+            <p>This is a game about experiencing the universe one click at a time.</p>
+    
+            <img src="/resources/gifs/universe.gif" alt="Picture of Universe">
+    
+            <p>That requires you to log in so that universes don't mix or something.</p>
+    
+            <button class="btn tooltip" id="btn-offline">Play Offline
+                <span class="tooltip-text">Playing Offline will save your progress locally. If you close your browser before logging-in you will lose all your progress! </span>
+            </button>
+    
+            <section class="section-padding"></section>
+        </section>
+    
+        <section id="section-main">
+    
+            <h1 id="game-title tooltip">It all started with an Atom</h1>
+            <p id="game-sub tooltip">A single atom does something</p>
+    
+            <hr>
+    
+            <div id="container-number-top"></div>
+    
+            <div class="container-img">
+                <img src="/resources/gifs/game/atom.gif" alt="Game Image" class="game-img">
+            </div>
+    
+            <hr>
+    
+            <div id="container-number-bottom"></div>
+    
+            <div class="container-info">
+                <p id="game-entropy">Entropy Rate = </p>
+                <p id="game-energy">Current Energy =</p>
+            </div>
+    
+    
+            <button class="btn tooltip btn-upgrade" id="btn-upgrade-1">Upgrade
+                <span class="tooltip-text" id="upgrade-txt-1">Tooltip text</span>
+            </button>
+    
+        </section>
+
+        <div class="push"></div>
+    </div>
+
+</body>
+
+<footer>
+    <div class="class">
+        <h2 class="class-title">DA376D VT21</h2>
+        <p class="class-par">This website was developed as part of a course in Högskolan Kristianstad Software
+            Engineering Program</p>
+    </div>
+
+    <div class="authors">
+        <h2 class="auth-title">GROUP 12</h2>
+        <h3 class="auth oj">Öjvind Nilsson</h3>
+        <p class="auth-p oj">I did this</p>
+        <h3 class="auth pt">Peter Tenghamn</h3>
+        <p class="auth-p ao">I pretended to do this</p>
+    </div>
+
+    <div class="link">
+        <h2 class="link-title">LINKS:</h2>
+        <ul class="links">
+            <p>Öjvind Nilsson</p>
+            <li>
+                <div class="container-links" id="links-ON">
+                    <a href="mailto: ojvindnilsson@gmail.com"><i class="fas fa-envelope"></i></a>
+                    <a href="tel:076-224-5906"><i class="fas fa-phone"></i></a>
+                    <a href="https://linkedin.com/in/ojvind-nilsson-7642b28a"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/onilsson-hkr"><i class="fab fa-github"></i></a>
+                </div>
+            </li>
+
+            <p>Peter Tenghamn</p>
+            <li>
+                <div class="container-links" id="links-PT">
+                    <a href="tel:070-767-1487"><i class="fas fa-phone"></i></a>
+                    <a href="https://www.facebook.com/peter.tenghamn"><i class="fab fa-facebook"></i></a>
+                    <a href="https://github.com/petertenghamn"><i class="fab fa-github"></i></a>
+                    </>
+            </li>
+        </ul>
+    </div>
+
+</footer>
+
+<!-- JavaScripts that need to be loaded AFTER page load -->
+<script src="js/user.js"></script>
+<script src="js/clicker.js"></script>
+
+</html>

@@ -1,0 +1,26 @@
+@font-face {
+    font-family: VHS;
+    src: url('../resources/fonts/real-vhs-font/RealVhsFontRegular-WyV0z.ttf');
+}
+
+@font-face {
+    font-family: Xtreme;
+    src: url('../resources/fonts/xtreem-2-font/Xtreem2PersonalUse-VYA6.ttf');
+}
+
+@font-face {
+    font-family: Atari;
+    src: url('../resources/fonts/nineteen-ninety-seven-font/NineteenNinetySeven-11XB.ttf');
+}
+
+@font-face {
+    font-family: Arcade;
+    src: url('../resources/fonts/karmatic-arcade/ka1.ttf');
+}
+
+@font-face {
+    font-family: Arcade-Title;
+    src: url('../resources/fonts/jmh-cthulhumbus-arcade/JMH\ Cthulhumbus\ Arcade.otf');
+}
+
+

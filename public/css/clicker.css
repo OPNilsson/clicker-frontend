@@ -1,0 +1,272 @@
+@import url('variables.css');
+
+/* ------- Global Classes ------- */
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    margin: 0;
+    overflow-y: scroll;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    background-image: url('/resources/gifs/pixel-stars.gif');
+}
+
+.wrapper {
+    min-height: 100%;
+    margin-bottom: -325px;
+}
+
+footer, .push {
+    height: 325px;
+}
+
+h1 {
+    text-align: center;
+    font-family: var(--font-Arcade);
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-family: var(--font-VHS);
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+h3 {
+    font-family: var(--font-Xtreme);
+    font-size: 12.8rem;
+    text-align: center;
+}
+
+p {
+    font-family: var(--font-Atari);
+}
+
+.btn {
+    padding: 1rem 3rem;
+    font-size: 1rem;
+    font-family: var(--font-Atari);
+    cursor: pointer;
+    background-color: var(--text-grey);
+}
+
+.btn:hover {
+    background: var(--color-accent);
+    color: var(--color-main);
+}
+
+.section-padding {
+    height: 100px;
+}
+
+.error {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 500px;
+    display: none;
+    color: var(--color-white);
+    background-color: var(--color-error);
+    border-radius: 50px;
+}
+
+.error:hover {
+    color: var(--color-accent);
+    background-color: var(--hover-grey);
+}
+
+/* ------- Tooltip Section ------- */
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    
+    min-width: 120px;
+
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+
+      bottom: 100%;
+      left: 50%;
+      margin-left: -60px;
+      /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+
+.info-login {
+    text-align: end;
+}
+
+.info-login img {
+    transform: rotate(180deg);
+    width: 150px;
+    margin-right: 1rem;
+    margin-top: -30px;
+}
+
+/* ------- Initial Section ------- */
+#section-initial {
+    background-color: var(--color-light);
+    border-radius: 25px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+    max-width: 800px;
+}
+
+#section-initial hr {
+    width: 60%;
+}
+
+#section-initial h1 {
+    margin-top: -50px;
+}
+
+#section-initial .btn {
+    margin-top: 50px;
+}
+
+/* ------- Main Section ------- */
+
+#section-main {
+    background-color: var(--color-light);
+    border-radius: 25px;
+    text-align: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 5px;
+    margin-top: 70px;
+    margin-bottom: 50px;
+}
+
+#section-main hr {
+    border: 1px solid;
+}
+
+#section-main .game-number {
+    position: absolute;
+    font-size: 1.25rem;
+    font-family: var(--font-Atari);
+}
+
+#section-main .green{
+    color: green;
+}
+
+#section-main .red{
+    color: var(--color-error);
+}
+
+#section-main .container-img {
+    height: 250px;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+
+#section-main img {
+    width: 250px;
+}
+
+#section-main img:hover {
+    cursor: pointer;
+    border-radius: 40%;
+    border: 1px solid var(--color-dark);
+    background-color: var(--color-accent);
+}
+
+#section-main img:active {
+    border-radius: 40%;
+    border: 1px solid var(--color-dark);
+    background-color: var(--color-white);
+}
+
+#section-main .container-info {
+    text-align: start;
+    margin-left: 50px;
+}
+
+#section-main .btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+/* ------- Footer Section -------- */
+footer {
+    padding-top: 15px;
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+    
+    justify-content: space-evenly;
+    margin-top: auto;
+    background-color: #121149;
+}
+
+footer p {
+    font-size: x-small;
+}
+
+footer .class {
+    max-width: 200px;
+}
+
+footer .disc {
+    max-width: 200px;
+}
+
+footer .authors {
+    max-width: 265px;
+}
+
+footer .authors .auth {
+    font-size: x-large;
+}
+
+footer .authors .auth-p {
+    text-align: center;
+}
+
+footer .link {
+    max-width: 200px;
+}
+
+footer .links li {
+    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 5px;
+    background: var(--color-white);
+}
+
+footer .links li .container-links {
+    text-align: center;
+}
+
+footer .links li .container-links a:hover {
+    color: var(--color-dark);
+}

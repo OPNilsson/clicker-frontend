@@ -1,0 +1,165 @@
+@import url("variables.css");
+
+/* ------- Global Classes ------- */
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.logo {
+  max-width: 100px;
+}
+
+/* ------- Navigation Bar ------- */
+.nav {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+  min-height: var(--navbar-height);
+
+  padding: 0 3rem;
+  transition: all 0.95s cubic-bezier(0.26, -0.01, 0, 1.01);
+  
+ background-color: #121149;
+}
+
+.nav .nav-bar {
+  justify-content: space-between;
+  margin-bottom: -16px;
+}
+
+.nav .nav-brand {
+  font-size: 1.5rem;
+  padding: 1.4rem;
+  display: block;
+  font-family: var(--font-Arcade-Title);
+}
+
+.nav .nav-brand .brand-logo {
+  color: white;
+  fill: white;
+  background: none;
+  vertical-align: text-top;
+}
+
+.nav .menu {
+  position: absolute;
+  top: 0;
+  left: 80px;
+  cursor: pointer;
+  display: none;
+  font-size: 2rem;
+}
+
+.nav a {
+  color: var(--color-white);
+}
+
+.nav a:hover {
+  color: var(--hover-grey);
+}
+
+.nav .nav-items a::after {
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: #fff;
+  transition: width 0.3s ease 0s,
+    left 0.3s ease 0s;
+  width: 0;
+}
+
+.nav .nav-items a:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.nav .nav-items {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.nav .nav-items .nav-link {
+  padding: 1.6rem 1rem;
+  font-family: var(--font-Arcade-Title);
+  font-size: 1.5rem;
+  position: relative;
+}
+
+.nav .user {
+  color: var(--color-white);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  padding: 1.4rem;
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+.nav-bar .user:hover {
+  color: var(--hover-grey);
+}
+
+.nav .icons {
+  color: var(--color-white);
+  display: flex;
+  justify-content: flex-end;
+  padding: 2rem 0;
+}
+
+.navbar-padding {
+  height: var(--navbar-height);
+}
+
+
+/* ------- JS Classes ------- */
+
+.expand {
+  height: 38rem;
+}
+
+.fixNav {
+  position: fixed;
+  background: linear-gradient(to right, rgba(18, 17, 73,1), rgba(39, 76, 119, 0.75));
+}
+
+.currentLocation {
+  outline: 2px solid white;
+  outline-offset: -13px;
+}
+
+/* ------- Resize Viewport depending on device screen -------*/
+
+/*      Called If Viewport > 883        */
+@media only screen and (max-width: 900px) {
+
+  .nav {
+    background: var(--color-dark);
+  }
+
+  .nav .nav-bar,
+  .nav .nav-items {
+    flex-direction: column;
+  }
+
+  .brand-logo {
+    visibility: hidden;
+  }
+
+  .nav .menu {
+    display: initial;
+  }
+}

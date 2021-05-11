@@ -1,0 +1,75 @@
+<div class="modal" id="modal">
+
+    <button data-modal-close class="btn-login-close">&times;</button>
+
+    <div class="modal-header" id="modal-header">
+        <div class="title title-login" id="title-login">Login</div>
+        <div class="title title-register" id="title-register">Register</div>
+    </div>
+
+    <div class="modal-body">
+
+        <!-- Logged in -->
+        <div class="container-logged" id="container-logged">
+            <h1 id="welcome">Welcome username!</h1>
+            <div>
+                <img src="/resources/vectors/user_avatars/001-man.svg" alt="User avatar not found!" width="150px"
+                    id="user-avatar">
+            </div>
+            <button class="popup-btn btn_stats" name="btn_stats" type="button" value="stats" id="btn-stats">
+                Statistics
+            </button>
+            <button class="popup-btn btn_logout" name="btn_logout" type="button" value="logout" id="btn-logout">
+                Log Out
+            </button>
+        </div>
+
+        <!-- Error messages -->
+        <p class="error" id="err1">small error</p>
+        <p class="error" id="err2">You did something very wrong and now it's long</p>
+        <p class="error" id="err3">Er</p>
+        <p class="error" id="err4">Er</p>
+
+        <!-- Login / Register  -->
+        <form class="modal-form" action="${pageContext.request.contextPath}/login" method="post" id="modal-form">
+
+            <div class="form-section form-username">
+                <span class="form-txt txt-username">
+                    Username:
+                </span>
+                <input class="txt-in" type="text" name="username" id="username">
+            </div>
+
+            <div class="form-section form-password">
+                <span class="form-txt txt-password">
+                    Password:
+                </span>
+                <input class="txt-in" type="password" name="password" id="password">
+            </div>
+
+            <div class="form-section form-confirm" id="form-confirm">
+                <span class="form-txt txt-confirm">
+                    Confirm Password:
+                </span>
+                <input class="txt-in" type="password" name="confirm" id="confirm">
+            </div>
+
+            <div class="form-section form-email" id="form-email">
+                <span class="form-txt txt-email">
+                    Email:
+                </span>
+                <input class="txt-in" type="email" name="email" id="email">
+            </div>
+
+            <button class="popup-btn btn_login_register" name="btn_register" type="button" value="register"
+                id="btn-register">
+                Register
+            </button>
+
+            <button class="popup-btn btn_login_login" name="btn_login" type="button" value="login" id="btn-login">
+                Login
+            </button>
+        </form>
+    </div>
+</div>
+<div id="overlay"></div>

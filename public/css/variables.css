@@ -1,0 +1,31 @@
+@import url('fonts.css');
+
+:root {
+
+    /* Global Variables */
+    --navbar-height: 88px;
+
+    /* Fonts */
+    --font-VHS: 'VHS', cursive;
+    --font-Atari: 'Atari', cursive;
+    --font-Xtreme: 'Xtreme', cursive;
+    --font-Arcade: 'Arcade', cursive;
+    --font-Arcade-Title: 'Arcade-Title', cursive;
+    
+    /*  Colors */
+    --hover-grey: rgba(255, 255, 255, 0.65);
+
+    --text-grey: #8790AF;
+    --text-blue: #5E88FC;
+
+    --color-error: #C20114;
+    --color-white: white;
+    --color-accent: #C7D6D5;
+
+    --color-light: #ECEBF3;
+    --color-main: #263A7A;
+    --color-dark: #121149;
+
+    /* Gradients */
+    --gradient-button: linear-gradient(to top, #accbee 0%, #e7f0fd 100%);
+}

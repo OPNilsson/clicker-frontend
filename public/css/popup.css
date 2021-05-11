@@ -1,0 +1,196 @@
+@import url('variables.css');
+
+/* ------- Global Classes ------- */
+
+a {
+    text-decoration: none;
+    color: var(--text-grey);
+}
+
+ul {
+    list-style-type: none;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.txt-in {
+    font-family: var(--font-Atari);
+    border-radius: 5px;
+    border: var(--color-accent);
+}
+
+.form-txt {
+    font-family: var(--font-Atari);
+    font-size: small;
+}
+
+/* ------- Pop-up ------- */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 200ms ease-in-out;
+    border: 1px solid black;
+    border-radius: 10px;
+    z-index: 10;
+    background-color: var(--color-light);
+    width: 500px;
+    max-width: 50%;
+    border-radius: 15px;
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
+
+}
+
+.modal-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.modal-header .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: var(--font-Arcade);
+    text-align: center;
+    align-items: center;
+}
+
+.modal-header .title-login:hover {
+    background: var(--color-dark);
+    color: var(--color-white);
+    cursor: pointer;
+}
+
+
+.modal-header .title-register:hover {
+    background: var(--color-dark);
+    color: var(--color-white);
+    cursor: pointer;
+}
+
+.btn-login-close {
+    margin-left: auto;
+    margin-right: 15px;
+    display: block;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1.25rem;
+    font-weight: bold;
+    background: var(--text-grey);
+    border-radius: 50%;
+    margin-top: -15px;
+    color: var(--color-white);
+}
+
+.btn-login-close:hover {
+    background: var(--hover-grey);
+}
+
+
+.modal-body {
+    background: var(--color-light);
+    padding: 10px 15px;
+    text-align: center;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.modal-body .form-section {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* This is needed for proper alignment since text is bigger than the others */
+.modal-body .form-confirm {
+    text-align: left;
+}
+
+.modal-body .form-confirm,
+.form-email,
+.btn_login_register {
+    display: none;
+}
+
+.modal-body .txt-username {
+    margin-right: 5px;
+}
+
+.modal-body .txt-password {
+    margin-right: 6px;
+}
+
+.modal-body .txt-confirm {
+    margin-right: 6px;
+    text-align: left;
+}
+
+.modal-body .txt-email {
+    margin-right: 18px;
+}
+
+.modal-body .popup-btn {
+    padding: 1rem 3rem;
+    font-size: 1rem;
+    font-family: var(--font-Atari);
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: var(--text-grey);
+}
+
+.modal-body .popup-btn:hover {
+    background: var(--color-accent);
+    color: var(--color-main);
+}
+
+.highlighted {
+    background: var(--color-main);
+    color: var(--color-white);
+}
+
+.modal .container-logged > * {
+   display: none;
+}
+
+.modal-body .container-logged img {
+    background-color: var(--color-white);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.modal-body .container-logged img:hover {
+    background-color: var(--hover-grey);
+    opacity: 50%;
+}
+
+/* Classes manipulated by javaScript */
+#overlay {
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .7);
+    pointer-events: none;
+    transition: 200ms ease-in-out;
+}
+
+#overlay.active {
+    z-index: 2;
+    opacity: 1;
+    pointer-events: all;
+}
+
+.hidden{
+    display: none;
+}
