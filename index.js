@@ -11,5 +11,5 @@ app.set('view engine', 'ejs')
 app.get('/', (req, res) => res.render('pages/clicker'))
 
 app.listen(port, ()=> {
-    console.log("Server listening on port: " + port);
+    console.log("Website Running: " + "http://localhost:" + port);
 });

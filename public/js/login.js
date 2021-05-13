@@ -7,6 +7,10 @@ const err2 = document.querySelector("#err2");
 const err3 = document.querySelector("#err3");
 const err4 = document.querySelector("#err4");
 
+// Cloud: https://hkr-clicker-cloud.herokuapp.com/login
+// Local: http://localhost:5000/login/
+const LOGIN_API_URL = "http://localhost:5000/login/"
+
 $(document).ready(function () {
 
     // This hides the different error messages when clicked
@@ -174,9 +178,8 @@ function login() {
     var username = $("#username").val();
     var pass = $("#password").val();
 
-    /** TODO: the URL needs to be modified when server is hosted on cloud */
     $.ajax({
-        url:  url + "/verify",
+        url:  LOGIN_API_URL + "/verify",
         type: "GET",
         data: { username: username, password: pass },
         success: function (response, status, http) {
@@ -189,7 +192,7 @@ function login() {
                 // Creates a cookie stored in local memory (Client side) is deleted when browser is closed
                 document.cookie = "username=" + response.username + "; path=/";
 
-                if (response.admin === 0)
+                if (response.admin === 0 || response.admin === false)
                     document.cookie = "admin=false; path=/";
                 else {
                     document.cookie = "admin=true; path=/";
@@ -207,13 +210,12 @@ function login() {
 function register() {
     var username = $("#username").val();  // The currently typed username
     var pass = $("#password").val();
-
-    // TODO: Change URL when hosting on Heroku
+    var email = $('#email').val();
 
     $.ajax({
-        url: "http://localhost:5000/register",
-        type: "POST",
-        data: { username: username, password: pass },
+        url: LOGIN_API_URL + "/register",
+        type: "GET",
+        data: { username: username, password: pass, email: email},
         success: function (response, status, http) {
             if (response === "FAILED") {
                 $(err1).show("slow");
@@ -273,6 +275,9 @@ function loginAttempt() {
         // Arrow Pointing to Login
         $('.info-login').hide();
 
+        // The Playing in offline mode h2 
+        $('.offline-error').hide();
+
         // The main screen 
         $('#section-main').show("slow");
 
@@ -292,6 +297,10 @@ function loginAttempt() {
 
         // The main screen 
         $('#section-main').show();
+
+        // The Playing in offline mode h2 
+        $('.offline-error').show();
+        
     } else {
         // The popup section
         $("#container-logged").children().hide();

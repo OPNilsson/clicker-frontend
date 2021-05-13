@@ -141,3 +141,32 @@ function enableScroll() {
   window.removeEventListener('touchmove', preventDefault, wheelOpt);
   window.removeEventListener('keydown', preventDefaultForScrollKeys, false);
 }
+
+
+// popup section for the stats setup
+$(document).ready(function () {
+  // hides all the buttons 
+  $("#container-stats").children().hide();
+  
+  // The Playing in offline mode h2 
+  $('.offline-error').hide();
+
+  $(btn_stats).click(function () {
+    getStats();
+  });
+
+  $("#btn-profile").click(function () {
+    viewProfile();
+  });
+
+});
+
+// reverts the popup to the logged in view
+function viewProfile() {
+  // Hides the stats panel 
+  $("#container-stats").children().hide();
+  
+  // Shows the rest 
+  $("#container-logged").children().show("slow");
+
+}

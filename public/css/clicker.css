@@ -50,6 +50,10 @@ p {
     font-family: var(--font-Atari);
 }
 
+.offline-error {
+    color: var(--color-error);
+}
+
 .btn {
     padding: 1rem 3rem;
     font-size: 1rem;
