@@ -256,6 +256,8 @@ function getCookie(cname) {
 function loginAttempt() {
     var usernameCookie = getCookie("username");
     var adminCookie = getCookie("admin");
+    
+    loadProgress();
 
     // Toggles the header body and logged in section
     // If cookie exists it will not be empty
