@@ -1,3 +1,8 @@
+// URL for stats API
+// Cloud: https://hkr-clicker-cloud.herokuapp.com/stats
+// Local: http://localhost:5000/stats/
+const STATS_API_URL = "http://localhost:5000/stats/"
+
 // Values for game usage
 var entropy = 0;
 var energy = 0;
@@ -18,11 +23,13 @@ var clickUpgradeLevel = 0;
 var timer;
 var saveInterval;
 
-$(document).ready(function () {
+const GAME_TIME = 1000;
+const SAVE_TIME = 30000;
 
-    // Get User Values from Database
-    getEntropy();
-    getEnergy();
+// stats security
+var verified = false;
+
+$(document).ready(function () {
 
     // Executes until clearInterval(timer) is called
     timer = setInterval(() => {
@@ -35,17 +42,16 @@ $(document).ready(function () {
             popNumber(null, "top", entropy);
         }
         
-    }, 1000);
+    }, GAME_TIME);
 
     // Executes until clearInterval(saveInterval) is called
     saveInterval = setInterval(() => {
         saveProgress();
-    }, 60000);
+    }, SAVE_TIME);
 
     // The button in the initial page
     $('#btn-offline').click(function () {
         offline = true;
-        loadProgress();
         loginAttempt();
     });
 
@@ -73,21 +79,6 @@ $(document).ready(function () {
     });
 
 });
-
-function getEnergy() {
-
-    // TODO: get from database
-    energy = 0;
-
-    $('#game-energy').text(energy.toString());
-}
-
-function getEntropy() {
-    // TODO: get from database
-    entropy = 0;
-
-    $('#game-entropy').text(entropy + " /s");
-}
 
 function addEnergy(create) {
     energy = energy + create;
@@ -196,6 +187,8 @@ function popNumber(element, side, number) {
 
 
 function saveProgress() {
+    console.log("Saving Progress")
+
     if (offline) {
         // Locally caches the current variables
         document.cookie = "energy=" + energy + "; path=/";
@@ -210,7 +203,44 @@ function saveProgress() {
         document.cookie = "upgradeMulti=" + upgradeMulti + "; path=/";
 
     } else {
-        // TODO: Save on the cloud
+
+        var usernameCookie = getCookie("username");
+        var adminCookie = getCookie("admin");
+
+        $.ajax({
+            url: STATS_API_URL + "/verify",
+            type: "GET",
+            data: { username: usernameCookie, admin: adminCookie },
+            success: function (response, status, http) {
+                if (response === "FAILED") {
+                    $('.offline-error').show();
+                    offline = true;
+
+                    // After 2 save cycles it will try again
+                    setTimeout(function () { offline = false; $('.offline-error').hide();}, SAVE_TIME * 2);
+                }
+                else {
+
+                    $.ajax({
+                        url: STATS_API_URL + "/save",
+                        type: "GET",
+                        data: {energy: energy, entropy: entropy, totalEnergy: totalEnergy, clickCount: clickCount, clickValue: clickValue, clickUpgrade: clickUpgradeLevel, upgradeCost: upgradeCost, upgradeMulti: upgradeMulti},
+                        success: function (response, status, http) {
+                            if (response === "FAILED") {
+                                $('.offline-error').show();
+                                offline = true;
+
+                                // After 2 save cycles it will try again
+                                setTimeout(function () { offline = false; $('.offline-error').hide(); }, SAVE_TIME * 2);
+                            }
+                            else {
+                                console.log("Progress Saved Online!");
+                            }
+                        }
+                    })
+                }
+            }
+        })
 
     }
 }
@@ -234,7 +264,52 @@ function loadProgress() {
 
     } else {
 
-        // TODO: load from the cloud
+        var usernameCookie = getCookie("username");
+        var adminCookie = getCookie("admin");
+
+        $.ajax({
+            url: STATS_API_URL + "/verify",
+            type: "GET",
+            data: { username: usernameCookie, admin: adminCookie },
+            success: function (response, status, http) {
+                if (response === "FAILED") {
+                    $('.offline-error').show();
+                    offline = true;
+
+                    // After 2 save cycles it will try again
+                    setTimeout(function () { offline = false; $('.offline-error').hide(); }, SAVE_TIME * 2);
+                }
+                else {
+
+                    $.ajax({
+                        url: STATS_API_URL + "/load",
+                        type: "GET",
+                        success: function (response, status, http) {
+                            if (response === "FAILED") {
+                                $('.offline-error').show();
+                                offline = true;
+
+                                // After 2 save cycles it will try again
+                                setTimeout(function () { offline = false; $('.offline-error').hide(); }, SAVE_TIME * 2);
+                            }
+                            else {
+                                console.log("Progress Loaded!");
+
+                                energy = response.energy;
+                                entropy = response.entropy;
+                                totalEnergy = response.totalenergy;
+                                clickCount = response.clickcount;
+                                clickValue = response.clickvalue;
+                                clickUpgradeLevel = response.clickupgradelevel;
+                                upgradeCost = response.upgradecost;
+                                upgradeMulti = response.upgrademulti;
+                            }
+                        }
+                    })
+                }
+            }
+        })
+
     }
 
     // Set labels to loaded values

@@ -1,14 +1,6 @@
 const user_img = document.querySelector("#user-avatar");
 const btn_stats = document.querySelector("#btn-stats");
 
-// Cloud: https://hkr-clicker-cloud.herokuapp.com/stats
-// Local: http://localhost:5000/stats/
-const STATS_API_URL = "http://localhost:5000/stats/"
-
-// Cloud: https://hkr-clicker-frontend.herokuapp.com/
-// Local: http://localhost:3000/
-const CLICKER_URL = "http://localhost:3000/"
-
 $(document).ready(function () {
 
     // Set the picture when the document loads
@@ -60,19 +52,6 @@ function getStats(){
     // Hides everything else
     $("#container-logged").children().hide();
 
-    $.ajax({
-        url: STATS_API_URL + "/verify",
-        type: "GET",
-        data: { username: usernameCookie, admin: adminCookie},
-        success: function (response, status, http) {
-            if (response === "FAILED") {
-                $(err1).show("slow");
-                $("#err1").text("Stats is down notify developers!");
-            }
-            else {
-                
-            }
-        }
-    })
+
 }
 
