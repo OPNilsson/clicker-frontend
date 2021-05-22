@@ -12,7 +12,7 @@ var clickUpgradeCost;
 // States to track
 var clickCount = 0;
 var totalEnergy = 0;
-var clickUpgradeLevel = 1;
+var clickUpgradeLevel = 0;
 
 // Timers
 var timer;
@@ -51,10 +51,9 @@ $(document).ready(function () {
 
     // Makes numbers float out when image is clicked
     $('.game-img').click(function () {
-        clickCount++;
-        var value = clickValue * clickUpgradeLevel;
-        addEnergy(value);
-        popNumber(this, "top", (value))
+        clickCount++;;
+        addEnergy(clickValue);
+        popNumber(this, "top", (clickValue))
         
         $('#game-clickCount').text(clickCount.toString());
     });
@@ -99,20 +98,21 @@ function addEnergy(create) {
 }
 
 function upgrade() {
-    clickValue += 1;
+    entropy = entropy + 1;
+
     energy = energy - upgradeCost;
+    upgradeMulti++;
 
     $('#game-entropy').text(entropy + " /s");
     $('#game-energy').text(energy.toString());
 }
 
 function clickUpgrade() {
-    entropy = entropy + 1;
+    clickValue = clickValue + 1;
 
     energy = energy - clickUpgradeCost;
-    upgradeMulti++;
+    clickUpgradeLevel++;
 
-    $('#game-entropy').text(entropy + " /s");
     $('#game-energy').text(energy.toString());
 }
 
@@ -134,12 +134,12 @@ function checkUpgrade() {
 }
 
 function checkClickUpgrade() {
-    clickUpgradeCost = 100 * clickUpgradeLevel;
+    clickUpgradeCost = 100 * (clickUpgradeLevel + 1);
 
     var text = "+1 Click Value Cost: " + clickUpgradeCost;
     $('#clickUpgrade-txt-1').text(text);
 
-    if (energy >= upgradeCost) {
+    if (energy >= clickUpgradeCost) {
         $('.btn-clickUpgrade').prop("disabled", false);
         $('.btn-clickUpgrade').animate({ 'opacity': '100%' }, 100)
     }
@@ -242,5 +242,7 @@ function loadProgress() {
     $('#game-entropy').text(entropy + " /s");
     $('#game-clickCount').text(clickCount.toString());
     $('#game-totalEnergy').text(totalEnergy.toString());
+    checkUpgrade();
+    checkClickUpgrade();
 }
 
