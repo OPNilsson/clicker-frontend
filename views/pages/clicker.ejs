@@ -57,33 +57,60 @@
         </section>
     
         <section id="section-main">
-            <h2 class="offline-error">PLAYING IN OFFLINE MODE</h2>
-    
-            <h1 id="game-title tooltip">It all started with an Atom</h1>
-            <p id="game-sub tooltip">A single atom does something</p>
-    
-            <hr>
-    
-            <div id="container-number-top"></div>
-    
-            <div class="container-img">
-                <img src="/resources/gifs/game/atom.gif" alt="Game Image" class="game-img">
+            <div class="row">
+                <div class="column-left">
+                    <h2>amassed enery</h2>
+
+                    <div id="container-number-bottom"></div>
+            
+                    <div class="container-info">
+                        <p>Entropy Rate</p>
+                        <p id="game-entropy">0 /s</p>
+                        <p>Current Energy</p>
+                        <p id="game-energy">0</p>
+
+                    </div>
+
+                    <hr>
+
+                    <h2>stats</h2>
+
+                    <p>Click Count</p>
+                    <p id="game-clickCount">0</p>
+                    <p>Total collected energy</p>
+                    <p id="game-totalEnergy">0</p>
+
+                </div>
+                <div class="column-middle">
+                    <h2 class="offline-error">PLAYING IN OFFLINE MODE</h2>
+            
+                    <h1 id="game-title tooltip">It all started with an Atom</h1>
+                    <p id="game-sub tooltip">A single atom does something</p>
+            
+                    <hr>
+            
+                    <div id="container-number-top"></div>
+            
+                    <div class="container-img">
+                        <img src="/resources/gifs/game/atom.gif" alt="Game Image" class="game-img">
+                    </div>
+            
+                </div>
+                <div class="column-right">
+                    <h2>store</h2>
+                    
+                    <p>Entropy Collector</p>
+                    <button class="btn tooltip btn-upgrade" id="btn-upgrade-1">Upgrade
+                        <span class="tooltip-text" id="upgrade-txt-1">Tooltip text</span>
+                    </button>
+
+                    <p>Manual Collector</p>
+                    <button class="btn tooltip btn-clickUpgrade" id="btn-clickUpgrade-1">Upgrade
+                        <span class="tooltip-text" id="clickUpgrade-txt-1">Tooltip text</span>
+                    </button>
+
+                </div>
             </div>
-    
-            <hr>
-    
-            <div id="container-number-bottom"></div>
-    
-            <div class="container-info">
-                <p id="game-entropy">Entropy Rate = </p>
-                <p id="game-energy">Current Energy =</p>
-            </div>
-    
-    
-            <button class="btn tooltip btn-upgrade" id="btn-upgrade-1">Upgrade
-                <span class="tooltip-text" id="upgrade-txt-1">Tooltip text</span>
-            </button>
-    
         </section>
 
         <div class="push"></div>
@@ -95,7 +122,7 @@
     <div class="class">
         <h2 class="class-title">DA376D VT21</h2>
         <p class="class-par">This website was developed as part of a course in Högskolan Kristianstad Software
-            Engineering Program</p>
+            Development Program</p>
     </div>
 
     <div class="authors">
@@ -103,7 +130,7 @@
         <h3 class="auth oj">Öjvind Nilsson</h3>
         <p class="auth-p oj">Responsible for base setup of frontend and backend</p>
         <h3 class="auth pt">Peter Tenghamn</h3>
-        <p class="auth-p ao">I pretended to do this</p>
+        <p class="auth-p ao">Concept designer and assisting fullstack developer</p>
     </div>
 
     <div class="link">

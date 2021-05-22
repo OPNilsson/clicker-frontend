@@ -1,3 +1,4 @@
+// Values for game usage
 var entropy = 0;
 var energy = 0;
 var clickValue = 1;
@@ -6,6 +7,12 @@ var upgradeLevel = 0;
 
 var offline;
 var upgradeCost;
+var clickUpgradeCost;
+
+// States to track
+var clickCount = 0;
+var totalEnergy = 0;
+var clickUpgradeLevel = 1;
 
 // Timers
 var timer;
@@ -21,6 +28,7 @@ $(document).ready(function () {
     timer = setInterval(() => {
         addEnergy(entropy);
         checkUpgrade();
+        checkClickUpgrade();
 
         // Having 0 pop is a bit weird.
         if(entropy > 0){
@@ -43,8 +51,12 @@ $(document).ready(function () {
 
     // Makes numbers float out when image is clicked
     $('.game-img').click(function () {
-        addEnergy(clickValue);
-        popNumber(this, "top", clickValue)
+        clickCount++;
+        var value = clickValue * clickUpgradeLevel;
+        addEnergy(value);
+        popNumber(this, "top", (value))
+        
+        $('#game-clickCount').text(clickCount.toString());
     });
 
     // Upgrade Button
@@ -54,6 +66,13 @@ $(document).ready(function () {
         checkUpgrade();
     });
 
+    // Click Upgrade Button
+    $('.btn-clickUpgrade').click(function () {
+        popNumber(this, "bottom", clickUpgradeCost);
+        clickUpgrade();
+        checkClickUpgrade();
+    });
+
 });
 
 function getEnergy() {
@@ -61,30 +80,40 @@ function getEnergy() {
     // TODO: get from database
     energy = 0;
 
-    $('#game-energy').text("Current Energy = " + energy);
+    $('#game-energy').text(energy.toString());
 }
 
 function getEntropy() {
     // TODO: get from database
     entropy = 0;
 
-    $('#game-entropy').text("Energy Entropy = " + entropy + " /s");
+    $('#game-entropy').text(entropy + " /s");
 }
 
 function addEnergy(create) {
     energy = energy + create;
+    totalEnergy += create;
 
-    $('#game-energy').text("Current Energy = " + energy);
+    $('#game-energy').text(energy.toString());
+    $('#game-totalEnergy').text(totalEnergy.toString());
 }
 
 function upgrade() {
+    clickValue += 1;
+    energy = energy - upgradeCost;
+
+    $('#game-entropy').text(entropy + " /s");
+    $('#game-energy').text(energy.toString());
+}
+
+function clickUpgrade() {
     entropy = entropy + 1;
 
-    energy = energy - upgradeCost;
+    energy = energy - clickUpgradeCost;
     upgradeMulti++;
 
-    $('#game-entropy').text("Entropy Rate = " + entropy + " /s");
-    $('#game-energy').text("Current Energy = " + energy);
+    $('#game-entropy').text(entropy + " /s");
+    $('#game-energy').text(energy.toString());
 }
 
 function checkUpgrade() {
@@ -101,6 +130,22 @@ function checkUpgrade() {
     else {
         $('.btn-upgrade').prop("disabled", true);
         $('.btn-upgrade').animate({ 'opacity': '40%' }, 100)
+    }
+}
+
+function checkClickUpgrade() {
+    clickUpgradeCost = 100 * clickUpgradeLevel;
+
+    var text = "+1 Click Value Cost: " + clickUpgradeCost;
+    $('#clickUpgrade-txt-1').text(text);
+
+    if (energy >= upgradeCost) {
+        $('.btn-clickUpgrade').prop("disabled", false);
+        $('.btn-clickUpgrade').animate({ 'opacity': '100%' }, 100)
+    }
+    else {
+        $('.btn-clickUpgrade').prop("disabled", true);
+        $('.btn-clickUpgrade').animate({ 'opacity': '40%' }, 100)
     }
 }
 
@@ -155,14 +200,18 @@ function saveProgress() {
         // Locally caches the current variables
         document.cookie = "energy=" + energy + "; path=/";
         document.cookie = "entropy=" + entropy + "; path=/";
+        document.cookie = "totalEnergy=" + totalEnergy + "; path=/";
 
+        document.cookie = "clickCount=" + clickCount + "; path=/";
         document.cookie = "clickValue=" + clickValue + "; path=/";
+        document.cookie = "clickUpgradeLevel=" + clickUpgradeLevel + "; path=/";
 
         document.cookie = "upgradeCost=" + upgradeCost + "; path=/";
         document.cookie = "upgradeMulti=" + upgradeMulti + "; path=/";
 
     } else {
         // TODO: Save on the cloud
+
     }
 }
 
@@ -173,8 +222,11 @@ function loadProgress() {
         if (getCookie("energy") != "") {
             energy = parseInt(getCookie("energy"));
             entropy = parseInt(getCookie("entropy"));
+            totalEnergy = parseInt(getCookie("totalEnergy"));
 
+            clickCount = parseInt(getCookie("clickCount"));
             clickValue = parseInt(getCookie("clickValue"));
+            clickUpgradeLevel = parseInt(getCookie("clickUpgradeLevel"));
 
             upgradeCost = parseInt(getCookie("upgradeCost"));
             upgradeMulti = parseInt(getCookie("upgradeMulti"));
@@ -184,5 +236,11 @@ function loadProgress() {
 
         // TODO: load from the cloud
     }
+
+    // Set labels to loaded values
+    $('#game-energy').text(energy.toString());
+    $('#game-entropy').text(entropy + " /s");
+    $('#game-clickCount').text(clickCount.toString());
+    $('#game-totalEnergy').text(totalEnergy.toString());
 }
 
