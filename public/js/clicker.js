@@ -2,6 +2,7 @@
 // Cloud: https://hkr-clicker-cloud.herokuapp.com/stats
 // Local: http://localhost:5000/stats/
 const STATS_API_URL = "http://localhost:5000/stats/"
+const AUTO_API_URL = "http://localhost:5000/auto/"
 
 // Values for game usage
 var entropy = 0;
@@ -14,6 +15,9 @@ var offline;
 var upgradeCost;
 var clickUpgradeCost;
 
+var boostCost;
+var boostActive = false;
+
 // States to track
 var clickCount = 0;
 var totalEnergy = 0;
@@ -23,8 +27,10 @@ var clickUpgradeLevel = 0;
 var timer;
 var saveInterval;
 
+// Times in ms
 const GAME_TIME = 1000;
 const SAVE_TIME = 30000;
+const BOOST_TIME = 900000;
 
 // stats security
 var verified = false;
@@ -34,7 +40,12 @@ $(document).ready(function () {
     // Executes until clearInterval(timer) is called
     timer = setInterval(() => {
         addEnergy(entropy);
+
+        checkUpgrade();
+        checkClickUpgrade();
+        checkBoostUpgrade();
         updateVariableValues();
+
 
         // Having 0 pop is a bit weird.
         if(entropy > 0){
@@ -46,6 +57,7 @@ $(document).ready(function () {
     // Executes until clearInterval(saveInterval) is called
     saveInterval = setInterval(() => {
         saveProgress();
+        loadProgress();
     }, SAVE_TIME);
 
     // The button in the initial page
@@ -77,20 +89,27 @@ $(document).ready(function () {
         checkClickUpgrade();
     });
 
+    // Boost Button
+    $('.btn-boost').click(function () {
+        popNumber(this, "bottom", boostCost);
+        boost();
+        checkBoostUpgrade();
+    });
+
 });
 
 function addEnergy(create) {
-    energy = energy + create;
-    totalEnergy += create;
+    energy = parseInt(energy) + parseInt(create);
+    totalEnergy += parseInt(create);
 
     $('#game-energy').text(energy.toString());
     $('#game-totalEnergy').text(totalEnergy.toString());
 }
 
 function upgrade() {
-    entropy = entropy + 1;
+    entropy = parseInt(entropy + 1);
 
-    energy = energy - upgradeCost;
+    energy = parseInt(energy) - parseInt(upgradeCost);
     upgradeMulti++;
 
     $('#game-entropy').text(entropy + " /s");
@@ -106,6 +125,39 @@ function clickUpgrade() {
 
     $('#game-energy').text(energy.toString());
     saveProgress();
+}
+
+function boost(){
+
+    if(!offline){
+        var usernameCookie = getCookie("username");
+
+        $.ajax({
+            url: AUTO_API_URL + "/start",
+            type: "GET",
+            data: { username: usernameCookie, entropy: entropy },
+            success: function (response, status, http) {
+                if (response === "FAILED") {
+                    $('.offline-error').show();
+                    offline = true;
+
+                    // After 2 save cycles it will try again
+                    setTimeout(function () { offline = false; $('.offline-error').hide(); }, SAVE_TIME * 2);
+                }
+                else {
+                    console.log("Entropy Executing Online!");
+
+                    energy = energy - boostCost;
+
+                    boostActive = true;
+
+                    setTimeout(function () { boostActive = false;}, BOOST_TIME);
+                }
+            }
+        });
+    }
+
+    $('#game-energy').text(energy.toString());
 }
 
 function checkUpgrade() {
@@ -138,6 +190,22 @@ function checkClickUpgrade() {
     else {
         $('.btn-clickUpgrade').prop("disabled", true);
         $('.btn-clickUpgrade').animate({ 'opacity': '40%' }, 100)
+    }
+}
+
+function checkBoostUpgrade() {
+    boostCost = 100 * (entropy + 1);
+
+    var text = "Double Entropy (Will Execute Even If Offline for 30 min) Cost: " + boostCost;
+    $('#boost-txt').text(text);
+
+    if (energy >= clickUpgradeCost && !offline && !boostActive) {
+        $('.btn-boost').prop("disabled", false);
+        $('.btn-boost').animate({ 'opacity': '100%' }, 100)
+    }
+    else {
+        $('.btn-boost').prop("disabled", true);
+        $('.btn-boost').animate({ 'opacity': '40%' }, 100)
     }
 }
 
@@ -249,7 +317,15 @@ function saveProgress() {
                         }
                     })
                 }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown){
+                $('.offline-error').show();
+                offline = true;
+
+                // After 2 save cycles it will try again
+                setTimeout(function () { offline = false; $('.offline-error').hide(); }, SAVE_TIME * 2);
             }
+            
         })
 
     }
@@ -305,23 +381,31 @@ function loadProgress() {
                             else {
                                 console.log("Progress Loaded!");
 
-                                energy = response.energy;
-                                entropy = response.entropy;
-                                totalEnergy = response.totalenergy;
-                                clickCount = response.clickcount;
-                                clickValue = response.clickvalue;
-                                clickUpgradeLevel = response.clickupgradelevel;
-                                upgradeCost = response.upgradecost;
-                                upgradeMulti = response.upgrademulti;
+                                energy = parseInt(response.energy);
+                                entropy = parseInt(response.entropy);
+                                totalEnergy = parseInt(response.totalenergy);
+                                clickCount = parseInt(response.clickcount);
+                                clickValue = parseInt(response.clickvalue);
+                                clickUpgradeLevel = parseInt(response.clickupgradelevel);
+                                upgradeCost = parseInt(response.upgradecost);
+                                upgradeMulti = parseInt(response.upgrademulti);
                             }
                         }
                     })
                 }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $('.offline-error').show();
+                offline = true;
+
+                // After 2 save cycles it will try again
+                setTimeout(function () { offline = false; $('.offline-error').hide(); }, SAVE_TIME * 2);
             }
         })
 
     }
 
+    checkBoostUpgrade();
     updateVariableValues();
 }
 
