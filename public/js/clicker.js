@@ -41,11 +41,7 @@ $(document).ready(function () {
     timer = setInterval(() => {
         addEnergy(entropy);
 
-        checkUpgrade();
-        checkClickUpgrade();
-        checkBoostUpgrade();
         updateVariableValues();
-
 
         // Having 0 pop is a bit weird.
         if(entropy > 0){
@@ -262,6 +258,7 @@ function updateVariableValues(){
     $('#game-totalEnergy').text(totalEnergy.toString());
     checkUpgrade();
     checkClickUpgrade();
+    checkBoostUpgrade();
 }
 
 function saveProgress() {
@@ -405,7 +402,6 @@ function loadProgress() {
 
     }
 
-    checkBoostUpgrade();
     updateVariableValues();
 }
 
