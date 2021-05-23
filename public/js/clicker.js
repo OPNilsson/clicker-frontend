@@ -34,8 +34,7 @@ $(document).ready(function () {
     // Executes until clearInterval(timer) is called
     timer = setInterval(() => {
         addEnergy(entropy);
-        checkUpgrade();
-        checkClickUpgrade();
+        updateVariableValues();
 
         // Having 0 pop is a bit weird.
         if(entropy > 0){
@@ -96,6 +95,7 @@ function upgrade() {
 
     $('#game-entropy').text(entropy + " /s");
     $('#game-energy').text(energy.toString());
+    saveProgress();
 }
 
 function clickUpgrade() {
@@ -105,6 +105,7 @@ function clickUpgrade() {
     clickUpgradeLevel++;
 
     $('#game-energy').text(energy.toString());
+    saveProgress();
 }
 
 function checkUpgrade() {
@@ -185,6 +186,15 @@ function popNumber(element, side, number) {
         });
 }
 
+function updateVariableValues(){
+    // Set labels to current values
+    $('#game-energy').text(energy.toString());
+    $('#game-entropy').text(entropy + " /s");
+    $('#game-clickCount').text(clickCount.toString());
+    $('#game-totalEnergy').text(totalEnergy.toString());
+    checkUpgrade();
+    checkClickUpgrade();
+}
 
 function saveProgress() {
     console.log("Saving Progress")
@@ -312,12 +322,6 @@ function loadProgress() {
 
     }
 
-    // Set labels to loaded values
-    $('#game-energy').text(energy.toString());
-    $('#game-entropy').text(entropy + " /s");
-    $('#game-clickCount').text(clickCount.toString());
-    $('#game-totalEnergy').text(totalEnergy.toString());
-    checkUpgrade();
-    checkClickUpgrade();
+    updateVariableValues();
 }
 
