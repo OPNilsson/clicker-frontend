@@ -9,7 +9,7 @@ const err4 = document.querySelector("#err4");
 
 // Cloud: https://hkr-clicker-cloud.herokuapp.com/login
 // Local: http://localhost:5000/login/
-const LOGIN_API_URL = "https://hkr-clicker-cloud.herokuapp.com/login/"
+const LOGIN_API_URL = "http://localhost:5000/login/";
 
 $(document).ready(function () {
 

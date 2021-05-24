@@ -1,8 +1,8 @@
 // URL for stats API
 // Cloud: https://hkr-clicker-cloud.herokuapp.com/stats
 // Local: http://localhost:5000/stats/
-const STATS_API_URL = "https://hkr-clicker-cloud.herokuapp.com/stats"
-const AUTO_API_URL = "https://hkr-clicker-cloud.herokuapp.com/auto/"
+const STATS_API_URL = "http://localhost:5000/stats/"
+const AUTO_API_URL = "http://localhost:5000/auto/"
 
 // Values for game usage
 var entropy = 0;
@@ -32,10 +32,15 @@ const GAME_TIME = 1000;
 const SAVE_TIME = 30000;
 const BOOST_TIME = 900000;
 
+// Initial Play Date
+var startDate;
+
 // stats security
 var verified = false;
 
 $(document).ready(function () {
+
+    calculatePlayTime();
 
     // Executes until clearInterval(timer) is called
     timer = setInterval(() => {
@@ -59,6 +64,7 @@ $(document).ready(function () {
     // The button in the initial page
     $('#btn-offline').click(function () {
         offline = true;
+        startDate = new Date;
         loginAttempt();
     });
 
@@ -277,6 +283,8 @@ function saveProgress() {
         document.cookie = "upgradeCost=" + upgradeCost + "; path=/";
         document.cookie = "upgradeMulti=" + upgradeMulti + "; path=/";
 
+        document.cookie = "startDate=" + startDate + "; path=/";
+
     } else {
 
         var usernameCookie = getCookie("username");
@@ -343,15 +351,20 @@ function loadProgress() {
 
             upgradeCost = parseInt(getCookie("upgradeCost"));
             upgradeMulti = parseInt(getCookie("upgradeMulti"));
+
+            // Gets the Date Value
+            var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)startDate\s*\=\s*([^;]*).*$)|^.*$/, "$1")
+
+            startDate = new Date(cookieValue);
         }
 
-    } else {
+    } else if (offline != null) {
 
         var usernameCookie = getCookie("username");
         var adminCookie = getCookie("admin");
 
         $.ajax({
-            url: STATS_API_URL + "/verify",
+            url: STATS_API_URL + "verify",
             type: "GET",
             data: { username: usernameCookie, admin: adminCookie },
             success: function (response, status, http) {
@@ -386,6 +399,7 @@ function loadProgress() {
                                 clickUpgradeLevel = parseInt(response.clickupgradelevel);
                                 upgradeCost = parseInt(response.upgradecost);
                                 upgradeMulti = parseInt(response.upgrademulti);
+                                startDate = new Date(response.startdate);
                             }
                         }
                     })
@@ -405,3 +419,14 @@ function loadProgress() {
     updateVariableValues();
 }
 
+function calculatePlayTime() {
+    var date = new Date(); /* creating object of Date class */
+
+    var ms = moment(date, "DD/MM/YYYY HH:mm:ss").diff(moment(startDate, "DD/MM/YYYY HH:mm:ss"));
+    var d = moment.duration(ms);
+    var playTime = Math.floor(d.asHours()) + moment.utc(ms).format(":mm:ss");
+
+    document.getElementById("clock").innerText = playTime;
+
+    var t = setTimeout(function () { calculatePlayTime() }, 1000); /* setting timer */
+}
