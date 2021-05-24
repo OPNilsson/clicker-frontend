@@ -144,7 +144,7 @@ function boost(){
                     offline = true;
 
                     // After 2 save cycles it will try again
-                    setTimeout(function () { offline = false; $('.offline-error').hide(); }, SAVE_TIME * 2);
+                    setTimeout(function () { offline = false; $('.offline-error').hide(); boost();}, SAVE_TIME * 2);
                 }
                 else {
                     console.log("Entropy Executing Online!");
@@ -152,6 +152,8 @@ function boost(){
                     energy = energy - boostCost;
 
                     boostActive = true;
+
+                    saveProgress();
 
                     setTimeout(function () { boostActive = false;}, BOOST_TIME);
                 }
@@ -337,6 +339,9 @@ function saveProgress() {
 }
 
 function loadProgress() {
+
+    console.log("Loading Progress");
+    
     if (offline) {
 
         // Doesn't load empty values
@@ -356,9 +361,11 @@ function loadProgress() {
             var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)startDate\s*\=\s*([^;]*).*$)|^.*$/, "$1")
 
             startDate = new Date(cookieValue);
+
+            console.log("Loading Progress Done!");
         }
 
-    } else if (offline != null) {
+    } else {
 
         var usernameCookie = getCookie("username");
         var adminCookie = getCookie("admin");
@@ -389,8 +396,6 @@ function loadProgress() {
                                 setTimeout(function () { offline = false; $('.offline-error').hide(); }, SAVE_TIME * 2);
                             }
                             else {
-                                console.log("Progress Loaded!");
-
                                 energy = parseInt(response.energy);
                                 entropy = parseInt(response.entropy);
                                 totalEnergy = parseInt(response.totalenergy);
@@ -400,6 +405,8 @@ function loadProgress() {
                                 upgradeCost = parseInt(response.upgradecost);
                                 upgradeMulti = parseInt(response.upgrademulti);
                                 startDate = new Date(response.startdate);
+
+                                console.log("Loading Progress Done!");
                             }
                         }
                     })
