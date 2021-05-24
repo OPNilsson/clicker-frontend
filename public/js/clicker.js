@@ -2,7 +2,7 @@
 // Cloud: https://hkr-clicker-cloud.herokuapp.com/stats
 // Local: http://localhost:5000/stats/
 const STATS_API_URL = "https://hkr-clicker-cloud.herokuapp.com/stats/"
-const AUTO_API_URL = "https://hkr-clicker-cloud.herokuapp.com/stats/"
+const AUTO_API_URL = "https://hkr-clicker-cloud.herokuapp.com/auto/"
 
 // Values for game usage
 var entropy = 0;
